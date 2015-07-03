@@ -1,0 +1,28 @@
+<!-- Use a templated HTML printing scriptlet to import common stylesheet -->
+<?!= HtmlService.createHtmlOutputFromFile('Stylesheet').getContent(); ?>
+
+<!-- Below is the HTML code that defines the sidebar element structure. -->
+<div class="sidebar branding-below">
+    <p>
+    This sidebar allows you to enter the number of words your essay needs to be.
+    It then displays a progress bar that tells you exactly how close to being done 
+    with your essay you are - keeping you motivated!
+    </p>
+    <div class="block form-group">
+      <p><label for="spinner">How many words does your essay need?</label>
+      <p>
+        <input id="spinner" name="value">
+        <button class="action" id="sidebar-save-button">Save</button>
+      </p>
+    <div>
+    <div id="sidebar-status"></div>
+    <div id="progressbar"></div>
+    
+</div>
+
+<div class="sidebar bottom">
+
+</div>
+
+<!-- Use a templated HTML printing scriptlet to import JavaScript -->
+<?!= HtmlService.createHtmlOutputFromFile('SidebarJavaScript').getContent(); ?>
