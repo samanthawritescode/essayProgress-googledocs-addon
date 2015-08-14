@@ -14,6 +14,8 @@
 
     $('#sidebar-save-button').click(onSaveClick); 
     showStatus('Ready.');
+    
+   // setInterval(onSaveSuccess(google.script.run.getWordCount()), 3000);
   });
 
   /**
@@ -30,12 +32,31 @@
     }
   }
   
+  function updateCountStatus(msg, classId) { 
+    $('#wordCount-status').removeClass().html(msg);
+    if (classId) { 
+      $('#wordCount-status').addClass(classId);
+    } 
+  } 
+  
   function onSaveSuccess(numWords) { 
      var wordsNeeded = $("#spinner").spinner("value");
      $("#progressbar").progressbar("option", "max", wordsNeeded);
      $("#progressbar").progressbar("option", "value", numWords);
-     showStatus('Saved. You have ' + numWords + ' out of ' + wordsNeeded + ' words.');
+     if (wordsNeeded > numWords) { 
+         showStatus('Saved.');
+         if (numWords < (wordsNeeded/2)) { 
+            updateCountStatus('You have ' + numWords + ' out of ' + wordsNeeded + ' words.', 'incomplete');
+         } else { 
+            updateCountStatus('You have ' + numWords + ' out of ' + wordsNeeded + ' words.', 'partial');
+         } 
+     } else { 
+         showStatus('Saved.');
+         updateCountStatus('You are ' + (numWords - wordsNeeded) + ' words over your goal. (' + numWords + ' words)', 'complete');
+     }  
   }
+  
+  
   
   function onSaveClick() { 
      this.disabled = true;
@@ -44,5 +65,12 @@
      this.disabled = false;
           
   } 
+
+  // in order to change the color in a decent-looking way, I'm going to have to get colored gradient images. 
+  function updateColor(color) { 
+    $("#progressbar").css("background", color);
+  }
+
+
 
 </script>
